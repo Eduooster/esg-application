@@ -44,6 +44,7 @@ public class CriarColetaService {
         validarCapacidade(capacidade, quantidadeAtualizada);
 
         atualizarCapacidade(capacidade, quantidadeAtualizada);
+        //teste
 
         salvarColeta(request, usuario, ponto);
 
