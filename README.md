@@ -48,7 +48,7 @@ O projeto utiliza GitHub Actions para automação do fluxo de integração e ent
 - Build do projeto
 - Execução dos testes automatizados
 - Deploy para staging (branch develop)
-- Deploy para produção (branch main)
+- Deploy para produção (branch master)
 
 ## 🧪 Ambiente de testes:
 - Utiliza banco em memória (H2)
