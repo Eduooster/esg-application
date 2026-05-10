@@ -8,7 +8,7 @@ Sistema desenvolvido com foco em gestão de pontos de coleta e integração com 
 
 ### 1. Clonar o repositório
 ```bash
-git clone <https://github.com/Eduooster/devops-esg>
+git clone <https://github.com/Eduooster/esg-application>
 cd esg =
 ```
 
