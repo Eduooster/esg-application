@@ -29,6 +29,7 @@ public abstract class BaseIntegracaoTest {
     public  void setup() {
         RestAssured.port = port;
 
+
         String corpoRegistro = """
 {
           "email": "%s",

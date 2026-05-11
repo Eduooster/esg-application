@@ -2,6 +2,7 @@ package org.example.esg.domain.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -45,13 +46,17 @@ public class TratadorDeErros {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(this.detalhar(ex));
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>>  handleEnumInvalido(HttpMessageNotReadableException ex) {
+        Map<String, String> map = new HashMap<>();
 
+        map.put("erro", "TipoMaterialInvalido");
+        map.put("mensagem", "O tipo de material informado é inválido.");
 
-
-
-
-
-
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(detalhar(ex));
+    }
 
     public Map<String, String> detalhar(Exception ex) {
         Map<String, String> map = new HashMap();

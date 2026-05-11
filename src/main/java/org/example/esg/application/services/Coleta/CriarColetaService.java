@@ -1,13 +1,11 @@
-package org.example.esg.application.services;
+package org.example.esg.application.services.Coleta;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.example.esg.application.dtos.in.ColetaRequestDto;
+import org.example.esg.application.dtos.out.ColetaResponseSummaryDto;
 import org.example.esg.domain.entities.*;
 import org.example.esg.domain.exceptions.CapacidadePontoAtingida;
 import org.example.esg.domain.exceptions.MaterialNaoSuportadoException;
 import org.example.esg.domain.exceptions.PontoNaoEncontradoException;
-import org.example.esg.infra.persistence.CapacidadePontoRepository;
 import org.example.esg.infra.persistence.ColetaRepository;
 import org.example.esg.infra.persistence.NotificacaoRepository;
 import org.example.esg.infra.persistence.PontoColetaRepository;
@@ -35,7 +33,8 @@ public class CriarColetaService {
 
 
 
-    public void criarColeta(ColetaRequestDto request, Usuario usuario) {
+
+    public ColetaResponseSummaryDto criarColeta(ColetaRequestDto request, Usuario usuario) {
         PontoColeta ponto = buscarPonto(request.pontoColetaId());
         CapacidadePonto capacidade = buscarCapacidade(ponto, request.tipoMaterial());
 
@@ -44,11 +43,18 @@ public class CriarColetaService {
         validarCapacidade(capacidade, quantidadeAtualizada);
 
         atualizarCapacidade(capacidade, quantidadeAtualizada);
-        //teste
 
-        salvarColeta(request, usuario, ponto);
+
+        Coleta coletaSalva = salvarColeta(request, usuario, ponto);
 
         verificarENotificarCapacidadeMaxima(capacidade, quantidadeAtualizada, ponto, request.tipoMaterial());
+
+        return new ColetaResponseSummaryDto(
+                coletaSalva.getId(),
+                coletaSalva.getQuantidade(),
+                coletaSalva.getTipoMaterial()
+
+        );
     }
 
     private PontoColeta buscarPonto(Long pontoId) {
@@ -77,7 +83,7 @@ public class CriarColetaService {
         capacidade.setQuantidadeAtual(quantidadeAtualizada);
     }
 
-    private void salvarColeta(ColetaRequestDto request, Usuario usuario, PontoColeta ponto) {
+    private Coleta salvarColeta(ColetaRequestDto request, Usuario usuario, PontoColeta ponto) {
         Coleta coleta = new Coleta();
         coleta.setUsuario(usuario);
         coleta.setPontoColeta(ponto);
@@ -85,7 +91,7 @@ public class CriarColetaService {
         coleta.setQuantidade(request.quantidadeDepositada());
         coleta.setDataColeta(LocalDateTime.now());
 
-        coletaRepository.save(coleta);
+        return coletaRepository.save(coleta);
     }
 
     private void verificarENotificarCapacidadeMaxima(

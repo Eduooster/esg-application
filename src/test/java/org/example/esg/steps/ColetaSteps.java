@@ -2,15 +2,14 @@ package org.example.esg.steps;
 
 import io.cucumber.java.pt.*;
 import org.example.esg.application.dtos.in.ColetaRequestDto;
-import org.example.esg.application.services.CriarColetaService;
-import org.example.esg.domain.entities.CapacidadePonto;
-import org.example.esg.domain.entities.PontoColeta;
-import org.example.esg.domain.entities.TipoMaterial;
-import org.example.esg.domain.entities.Usuario;
+
+import org.example.esg.application.services.Coleta.CriarColetaService;
+import org.example.esg.domain.entities.*;
 import org.example.esg.infra.persistence.ColetaRepository;
 import org.example.esg.infra.persistence.NotificacaoRepository;
 import org.example.esg.infra.persistence.PontoColetaRepository;
 import org.mockito.*;
+import io.cucumber.java.Before;
 
 import java.util.*;
 
@@ -40,6 +39,17 @@ public class ColetaSteps {
 
     public ColetaSteps() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Before
+    public void setupMocksPadrao() {
+        when(coletaRepository.save(any())).thenAnswer(invocation -> {
+            Coleta coletaParaSalvar = invocation.getArgument(0);
+            if (coletaParaSalvar != null) {
+                coletaParaSalvar.setId(99L);
+            }
+            return coletaParaSalvar;
+        });
     }
 
     // 🔹 GIVEN
@@ -79,10 +89,12 @@ public class ColetaSteps {
         request = new ColetaRequestDto(1L, 10, TipoMaterial.PLASTICO);
         usuario = new Usuario();
 
+
         when(pontoColetaRepository.findById(1L))
                 .thenReturn(Optional.of(ponto));
-    }
 
+
+    }
     @Dado("não existe um ponto de coleta com o id informado")
     public void ponto_nao_existe() {
         request = new ColetaRequestDto(1L, 10, TipoMaterial.PLASTICO);
@@ -141,7 +153,7 @@ public class ColetaSteps {
     @Quando("o usuário registra uma coleta de {int} unidades")
     public void registra_coleta(int quantidade) {
         try {
-            request = new ColetaRequestDto(1L, 10, TipoMaterial.PLASTICO);
+            request = new ColetaRequestDto(1L, quantidade, TipoMaterial.PLASTICO);
             criarColetaService.criarColeta(request, usuario);
         } catch (Exception e) {
             exception = e;

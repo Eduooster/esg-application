@@ -65,6 +65,22 @@ public class ColetaApiTest extends BaseIntegracaoTest{
                 .body("mensagem", containsString("Ponto não encontrado"));
     }
 
+    @Test
+    public void deveRetornarListaDeColetasDoUsuarioComSucesso() {
+        Response responsePontosColeta =
+                given()
+                        .header("Authorization", "Bearer " + token)
+                        .contentType("application/json")
+                        .when()
+                        .get("/coleta");
+
+        responsePontosColeta.then()
+                .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemas/listar-coletas-usuario-schema.json"));
+    }
+
+
+
 
 }
 
