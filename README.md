@@ -1,6 +1,6 @@
 # 🌱 Projeto - Cidades ESG Inteligentes
 
-Sistema desenvolvido com foco em gestão de pontos de coleta e integração com boas práticas de DevOps, incluindo CI/CD, containerização e automação de deploy.
+Sistema desenvolvido com foco em gestão de pontos de coleta e integração com boas práticas de DevOps, incluindo CI/CD, containerização, automação de deploy, testes de api e aplicacação de BDD.
 
 ---
 
@@ -9,7 +9,7 @@ Sistema desenvolvido com foco em gestão de pontos de coleta e integração com 
 ### 1. Clonar o repositório
 ```bash
 git clone <https://github.com/Eduooster/esg-application>
-cd esg =
+
 ```
 
 
@@ -119,7 +119,9 @@ O sistema é composto por:
 
 ## 📷 Testes passando no pipeline
 
-[inserir imagem - aba de testes do GitHub Actions]
+<img width="609" height="269" alt="Captura de tela 2026-05-10 225111" src="https://github.com/user-attachments/assets/bcb7a9a4-cba6-4486-b812-553e2186d6c1" />
+
+
 
 
 🔧 Tecnologias utilizadas
@@ -138,15 +140,44 @@ O sistema é composto por:
 
 <img width="953" height="1142" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/41a1195a-594a-4e30-9e87-554b8d0bccbc" />
 
+## Execução dos Testes
+
+Para executar os testes da aplicação, siga os passos abaixo:
+
+1. Realize o clone do repositório:
+
+```bash
+git clone <url-do-repositorio>
+```
+
+2. Abra o projeto em uma IDE compatível com Maven.
+
+3. Execute o ciclo de testes do Maven:
+
+- Pela IDE:
+
+```text
+Maven → Lifecycle → test
+```
+
+- Ou pelo terminal:
+
+```bash
+mvn test
+```
+
+A aplicação será inicializada automaticamente em ambiente de teste durante a execução dos testes de integração.
+
 
 
 ## 🚀 Resultado final
 
-### O projeto demonstra uma arquitetura completa de DevOps com:
+### O projeto demonstra uma arquitetura completa, contendo:
 
 - Integração contínua
 - Entrega contínua
-- ontainerização
+- Containerização
 - Orquestração de serviços
 - Ambientes separados (dev/test/prod)
+- Implementação de teste de api automatizado com RestAssured
 
