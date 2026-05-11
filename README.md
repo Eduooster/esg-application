@@ -147,7 +147,8 @@ Para executar os testes da aplicação, siga os passos abaixo:
 1. Realize o clone do repositório:
 
 ```bash
-git clone <url-do-repositorio>
+git clone <https://github.com/Eduooster/esg-application>
+
 ```
 
 2. Abra o projeto em uma IDE compatível com Maven.
